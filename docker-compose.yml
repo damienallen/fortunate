@@ -16,3 +16,4 @@ services:
     network_mode: host
     volumes:
       - ./fortunate:/service/fortunate
+      - ./sqlite.db:/service/sqlite.db

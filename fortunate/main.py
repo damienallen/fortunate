@@ -1,15 +1,16 @@
-from typing import Union
-
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+from fortunate.models import fetch_random_epigram
 
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse("/docs")
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/epigrams/random")
+def random_epigram(category: str | None = None):
+    return fetch_random_epigram(category)
