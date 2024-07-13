@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel, Session, create_engine
+from sqlmodel import Field, SQLModel, Session, create_engine, select
 
 
 engine = create_engine("sqlite:///sqlite.db", echo=True)
@@ -19,3 +19,10 @@ def create_epigram(text: str, category: str = "custom"):
     with Session(engine) as session:
         session.add(Epigram(category=category, text=text))
         session.commit()
+
+
+def fetch_epigrams_by_category(category: str) -> list[Epigram]:
+    with Session(engine) as session:
+        statement = select(Epigram).where(Epigram.category == category)
+        results = session.exec(statement)
+        return [epigram for epigram in results]

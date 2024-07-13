@@ -1,7 +1,7 @@
 import httpx
 import base64
 from pathlib import Path
-from fortunate.models import create_epigram, init_db
+from fortunate.models import create_epigram, fetch_epigrams_by_category, init_db
 from tqdm import tqdm
 
 import logging
@@ -37,7 +37,12 @@ def collect_fortuntes():
         ):
             continue
 
+        # Skip category if already in DB
         category = item_path.parts[-1]
+        if fetch_epigrams_by_category(category):
+            print(f"'{category}' already added, skipping")
+            continue
+
         blob_resp = httpx.get(item["url"])
         blob_resp.raise_for_status()
 
