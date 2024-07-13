@@ -1,0 +1,19 @@
+services:
+  ui:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    depends_on:
+      - service
+
+    network_mode: host
+    volumes:
+      - ./app/src:/app/src
+
+  service:
+    build:
+      context: .
+      dockerfile: ./fortunate/Dockerfile
+    network_mode: host
+    volumes:
+      - ./fortunate:/service/fortunate
