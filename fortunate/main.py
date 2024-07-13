@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, JSONResponse
 from fortunate.models import create_epigram, fetch_random_epigram
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/", include_in_schema=False)
