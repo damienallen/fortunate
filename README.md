@@ -14,7 +14,7 @@ The only system dependecy is docker (compose).
 Build images for frontend and backend:
 
 ```bash
-$ docker compose build
+docker compose build
 ```
 
 ### Database
@@ -22,13 +22,13 @@ $ docker compose build
 The database can be populated from [fortune-mod's dat files](https://github.com/shlomif/fortune-mod/tree/master/fortune-mod/datfiles):
 
 ```bash
-$ docker compose run --rm service python -m fortunate.populate
+docker compose run --rm service python -m fortunate.populate
 ```
 
 However, this can take some time, so a faster option is to use the populated sample database:
 
 ```bash
-$ cp sample_sqlite.db sqlite.db
+cp sample_sqlite.db sqlite.db
 ```
 
 ## Use
@@ -36,7 +36,7 @@ $ cp sample_sqlite.db sqlite.db
 Run the application locally:
 
 ```bash
-$ docker compose up
+docker compose up
 ```
 
 View the app: http://localhost:5173
