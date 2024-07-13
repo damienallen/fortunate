@@ -6,6 +6,8 @@ A simple web app for epigrams
 
 The development environment is built around docker, alleviating the need to manage python and node versions.
 
+The only system dependecy is docker (compose).
+
 
 ### Build
 
@@ -17,7 +19,7 @@ $ docker compose build
 
 ### Database
 
-The database can be populated from fortune-mod's dat files:
+The database can be populated from [fortune-mod's dat files](https://github.com/shlomif/fortune-mod/tree/master/fortune-mod/datfiles):
 
 ```bash
 $ docker compose run --rm service python -m fortunate.populate
