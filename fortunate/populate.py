@@ -4,10 +4,6 @@ from pathlib import Path
 from fortunate.models import create_epigram, fetch_epigrams_by_category, init_db
 from tqdm import tqdm
 
-import logging
-
-logging.getLogger("sqlalchemy.engine.Engine").disabled = True
-
 GH_USER = "shlomif"
 GH_REPO = "fortune-mod"
 BRANCH = "master"
@@ -53,7 +49,8 @@ def collect_fortuntes():
             epigrams,
             desc=category,
         ):
-            create_epigram(text=epigram, category=category)
+            if epigram:
+                create_epigram(text=epigram, category=category)
 
 
 if __name__ == "__main__":
