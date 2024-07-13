@@ -1,4 +1,4 @@
-import { Paper, Center, Button } from '@mantine/core'
+import { Paper, Center } from '@mantine/core'
 import { useEffect, useState } from 'react'
 
 import { createUseStyles } from 'react-jss'
