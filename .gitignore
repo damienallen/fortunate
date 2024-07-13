@@ -1,5 +1,8 @@
 .vscode/
+scratch/
 
 *.pyc
 __pycache__/
 ,B
+
+sqllite
