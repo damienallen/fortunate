@@ -20,13 +20,15 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
     const timerRef = useRef<any>()
 
     const updateTimer = () => {
-        console.log('b', timerRef, isPlaying)
         clearTimeout(timerRef.current)
         if (isPlaying && epigram) {
             const timeout = Math.max(epigram.length * 100, 5000)
             timerRef.current = setTimeout(() => randomize(), timeout)
+
+            console.debug(`Timer set for ${timeout} ms`)
+        } else {
+            console.debug('Paused, no timer set')
         }
-        console.log('a', timerRef, isPlaying)
     }
 
     const randomize = () => {
@@ -58,8 +60,8 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
                     withBorder
                 >
                     <div>
-                        {epigram.split('\n').map((str) => (
-                            <p key={hash(str)}>{str}</p>
+                        {epigram.split('\n').map((str, ind) => (
+                            <p key={ind}>{str}</p>
                         ))}
                     </div>
                     <div
@@ -107,8 +109,3 @@ const fetchEpigram = async () => {
     const epigram = await response.json()
     return epigram as Epigram
 }
-
-const hash = (text: string) =>
-    text
-        .split('')
-        .reduce((prevHash, currVal) => ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0, 0)

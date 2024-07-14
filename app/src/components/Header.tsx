@@ -1,4 +1,5 @@
 import { useMantineColorScheme } from '@mantine/core'
+import { Sun } from '@phosphor-icons/react'
 import { GithubLogo } from '@phosphor-icons/react/GithubLogo'
 import { Moon } from '@phosphor-icons/react/Moon'
 
@@ -14,7 +15,11 @@ export const Header = () => {
             }}
         >
             <a onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}>
-                <Moon style={{ marginRight: 16 }} size={32} weight="fill" />
+                {colorScheme === 'dark' ? (
+                    <Sun style={{ marginRight: 16 }} size={32} weight="fill" />
+                ) : (
+                    <Moon style={{ marginRight: 16 }} size={32} weight="fill" />
+                )}
             </a>
             <a href="https://github.com/damienallen/fortunate">
                 <GithubLogo size={32} weight="fill" />
