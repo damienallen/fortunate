@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { FastForwardCircle } from '@phosphor-icons/react/FastForwardCircle'
-import { PauseCircle, PlayCircle, PlusCircle, Tag } from '@phosphor-icons/react'
+import { useInterval } from 'usehooks-ts'
+import { Tag } from '@phosphor-icons/react'
 import { Paper } from '@mantine/core'
+import { Controls } from './Controls'
 
 interface Epigram {
     category: string
@@ -13,21 +14,38 @@ interface EpigramWidgetProps {
     setModalOpen: CallableFunction
 }
 
+const minDelay = 5000
+
 export const EpigramWidget = (props: EpigramWidgetProps) => {
     const [category, setCategory] = useState<string>('')
     const [epigram, setEpigram] = useState<string>('')
+
     const [isPlaying, setIsPlaying] = useState<boolean>(true)
+    const [progress, setProgress] = useState<number>(0)
+    const [delay, setDelay] = useState<number>(minDelay)
+
     const timerRef = useRef<any>()
+    useInterval(
+        () => {
+            setProgress(progress + 5)
+            console.log(delay)
+        },
+        isPlaying ? delay / 20 : null
+    )
 
     const updateTimer = () => {
+        setProgress(0)
         clearTimeout(timerRef.current)
-        if (isPlaying && epigram) {
-            const timeout = Math.max(epigram.length * 100, 5000)
-            timerRef.current = setTimeout(() => randomize(), timeout)
 
+        console.log(epigram, epigram.length)
+        if (isPlaying && epigram) {
+            const timeout = Math.max(epigram.length * 100, minDelay)
+            setDelay(timeout)
+            timerRef.current = setTimeout(() => randomize(), timeout)
             console.debug(`Timer set for ${timeout} ms`)
         } else {
             console.debug('Paused, no timer set')
+            setProgress(100)
         }
     }
 
@@ -77,28 +95,13 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
                         {category} <Tag weight="fill" />
                     </div>
                 </Paper>
-
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 8,
-                    }}
-                >
-                    <a onClick={() => setIsPlaying(!isPlaying)}>
-                        {isPlaying ? (
-                            <PauseCircle size={32} weight="fill" />
-                        ) : (
-                            <PlayCircle size={32} weight="fill" />
-                        )}
-                    </a>
-                    <a onClick={randomize}>
-                        <FastForwardCircle size={32} weight="fill" />
-                    </a>
-                    <a onClick={() => props.setModalOpen(true)}>
-                        <PlusCircle size={32} weight="fill" />
-                    </a>
-                </div>
+                <Controls
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    randomize={randomize}
+                    setModalOpen={props.setModalOpen}
+                    progress={progress}
+                />
             </div>
         </>
     )
