@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { FastForwardCircle } from '@phosphor-icons/react/FastForwardCircle'
-import { Tag } from '@phosphor-icons/react'
+import { PauseCircle, PlusCircle, Tag } from '@phosphor-icons/react'
 import { Paper } from '@mantine/core'
 
 interface Epigram {
@@ -42,22 +42,51 @@ export const Epigram = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 16,
             }}
         >
-            <Paper shadow="md" radius="md" withBorder p="xl">
+            <Paper
+                style={{ maxWidth: 640, width: '100vw', padding: '0 24px' }}
+                shadow="md"
+                radius="md"
+                withBorder
+            >
                 <div>
                     {epigram.split('\n').map((str) => (
                         <p key={hashCode(str)}>{str}</p>
                     ))}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', opacity: 0.7 }}>
-                    <Tag weight="fill" style={{ marginRight: 8 }} /> {category}
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        opacity: 0.6,
+                        paddingBottom: 16,
+                        gap: 8,
+                    }}
+                >
+                    {category} <Tag weight="fill" />
                 </div>
             </Paper>
 
-            <a onClick={randomize}>
-                <FastForwardCircle size={32} weight="fill" />
-            </a>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8,
+                }}
+            >
+                <a onClick={randomize}>
+                    <PauseCircle size={32} weight="fill" />
+                </a>
+                <a onClick={randomize}>
+                    <FastForwardCircle size={32} weight="fill" />
+                </a>
+                <a onClick={randomize}>
+                    <PlusCircle size={32} weight="fill" />
+                </a>
+            </div>
         </div>
     )
 }
