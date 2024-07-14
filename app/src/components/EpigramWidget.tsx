@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FastForwardCircle } from '@phosphor-icons/react/FastForwardCircle'
-import { PauseCircle, PlusCircle, Tag } from '@phosphor-icons/react'
+import { PauseCircle, PlayCircle, PlusCircle, Tag } from '@phosphor-icons/react'
 import { Paper } from '@mantine/core'
 
 interface Epigram {
@@ -16,16 +16,28 @@ interface EpigramWidgetProps {
 export const EpigramWidget = (props: EpigramWidgetProps) => {
     const [category, setCategory] = useState<string>('')
     const [epigram, setEpigram] = useState<string>('')
+    const [isPlaying, setIsPlaying] = useState<boolean>(true)
+    const timerRef = useRef<any>()
+
+    const updateTimer = () => {
+        console.log('b', timerRef, isPlaying)
+        clearTimeout(timerRef.current)
+        if (isPlaying && epigram) {
+            const timeout = Math.max(epigram.length * 100, 5000)
+            timerRef.current = setTimeout(() => randomize(), timeout)
+        }
+        console.log('a', timerRef, isPlaying)
+    }
 
     const randomize = () => {
-        fetchEpigram().then((epigram) => {
-            setCategory(epigram.category)
-            setEpigram(epigram.text)
-            console.debug(epigram.text)
+        fetchEpigram().then((item) => {
+            setCategory(item.category)
+            setEpigram(item.text)
         })
     }
 
     useEffect(() => randomize(), [])
+    useEffect(() => updateTimer(), [isPlaying, epigram])
 
     return (
         <>
@@ -71,8 +83,12 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
                         gap: 8,
                     }}
                 >
-                    <a onClick={randomize}>
-                        <PauseCircle size={32} weight="fill" />
+                    <a onClick={() => setIsPlaying(!isPlaying)}>
+                        {isPlaying ? (
+                            <PauseCircle size={32} weight="fill" />
+                        ) : (
+                            <PlayCircle size={32} weight="fill" />
+                        )}
                     </a>
                     <a onClick={randomize}>
                         <FastForwardCircle size={32} weight="fill" />
