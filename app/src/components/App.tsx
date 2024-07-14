@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { AddModal } from './AddModal'
 
 const theme = createTheme({
-    /** Theme override here */
+    primaryColor: 'gray',
 })
 
 export const App = () => {
