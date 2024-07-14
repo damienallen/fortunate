@@ -4,6 +4,7 @@ import { Header } from './Header'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { useState } from 'react'
 import { AddModal } from './AddModal'
+import { Notifications } from '@mantine/notifications'
 
 const theme = createTheme({
     primaryColor: 'gray',
@@ -29,6 +30,7 @@ export const App = () => {
                 <Header />
                 <EpigramWidget setModalOpen={setModalOpen} />
             </div>
+            <Notifications style={{ position: 'absolute', bottom: 16, right: 16 }} />
         </MantineProvider>
     )
 }

@@ -31,7 +31,7 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
         <>
             <div
                 style={{
-                    flex: '1 1 100vh',
+                    flex: 1,
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
