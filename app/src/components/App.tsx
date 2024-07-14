@@ -1,15 +1,20 @@
 import '@mantine/core/styles.css'
-import { Epigram } from './Epigram'
+import { EpigramWidget } from './EpigramWidget'
 import { Header } from './Header'
 import { createTheme, MantineProvider } from '@mantine/core'
+import { useState } from 'react'
+import { AddModal } from './AddModal'
 
 const theme = createTheme({
-    /** Your theme override here */
+    /** Theme override here */
 })
 
 export const App = () => {
+    const [modalOpen, setModalOpen] = useState(false)
+
     return (
-        <MantineProvider theme={theme} defaultColorScheme="dark">
+        <MantineProvider theme={theme} defaultColorScheme="auto">
+            <AddModal open={modalOpen} close={() => setModalOpen(false)} />
             <div
                 style={{
                     margin: 0,
@@ -22,7 +27,7 @@ export const App = () => {
                 }}
             >
                 <Header />
-                <Epigram />
+                <EpigramWidget setModalOpen={setModalOpen} />
             </div>
         </MantineProvider>
     )
