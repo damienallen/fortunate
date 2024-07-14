@@ -1,6 +1,6 @@
 import { FastForwardCircle } from '@phosphor-icons/react/FastForwardCircle'
 import { Pause, Play, PlusCircle } from '@phosphor-icons/react'
-import { Center, rem, RingProgress } from '@mantine/core'
+import { Center, rem, RingProgress, useMantineColorScheme } from '@mantine/core'
 
 interface ControlsProps {
     isPlaying: boolean
@@ -11,6 +11,8 @@ interface ControlsProps {
 }
 
 export const Controls = (props: ControlsProps) => {
+    const { colorScheme } = useMantineColorScheme()
+
     return (
         <div
             style={{
@@ -23,7 +25,13 @@ export const Controls = (props: ControlsProps) => {
                 <RingProgress
                     size={32}
                     thickness={2}
-                    sections={[{ value: props.progress, color: 'black' }]}
+                    sections={[
+                        {
+                            value: props.progress,
+                            color: colorScheme === 'dark' ? 'white' : 'black',
+                            opacity: 0.8,
+                        },
+                    ]}
                     label={
                         <Center>
                             {props.isPlaying ? (

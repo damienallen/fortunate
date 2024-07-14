@@ -25,19 +25,12 @@ export const EpigramWidget = (props: EpigramWidgetProps) => {
     const [delay, setDelay] = useState<number>(minDelay)
 
     const timerRef = useRef<any>()
-    useInterval(
-        () => {
-            setProgress(progress + 5)
-            console.log(delay)
-        },
-        isPlaying ? delay / 20 : null
-    )
+    useInterval(() => setProgress(progress + 5), isPlaying ? delay / 20 : null)
 
     const updateTimer = () => {
         setProgress(0)
         clearTimeout(timerRef.current)
 
-        console.log(epigram, epigram.length)
         if (isPlaying && epigram) {
             const timeout = Math.max(epigram.length * 100, minDelay)
             setDelay(timeout)
