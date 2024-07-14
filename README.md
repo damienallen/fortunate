@@ -39,6 +39,6 @@ Run the application locally:
 docker compose up
 ```
 
-View the app: http://localhost:5173
+View the app: [localhost:5173](http://localhost:5173)
 
-Or check out the api:  http://localhost:8000/docs
+Or check out the api:  [localhost:8000/docs](http://localhost:8000/docs)

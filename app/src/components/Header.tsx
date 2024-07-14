@@ -1,22 +1,24 @@
-import { Title } from '@mantine/core'
-import { createUseStyles } from 'react-jss'
-
-const useStyles = createUseStyles({
-  header: {
-    flex: 0,
-    fontFamily: 'sans-serif'
-  },
-})
+import { useMantineColorScheme } from '@mantine/core'
+import { GithubLogo } from '@phosphor-icons/react/GithubLogo'
+import { Moon } from '@phosphor-icons/react/Moon'
 
 export const Header = () => {
-  const classes = useStyles()
+    const { colorScheme, setColorScheme } = useMantineColorScheme()
 
-  return (
-    <div className={classes.header}>
-      <Title>
-        fortunate
-      </Title>
-    </div>
-  )
+    return (
+        <div
+            style={{
+                padding: 10,
+                flex: 0,
+                textAlign: 'right',
+            }}
+        >
+            <a onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}>
+                <Moon style={{ marginRight: 16 }} size={32} weight="fill" />
+            </a>
+            <a href="https://github.com/damienallen/fortunate">
+                <GithubLogo size={32} weight="fill" />
+            </a>
+        </div>
+    )
 }
-
